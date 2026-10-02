@@ -1,0 +1,67 @@
+﻿@model FougeraClub1.Models.PurchaseOrder
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PurchaseOrder</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.OrderNumber)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.OrderNumber)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.OrderDate)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.OrderDate)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.WithVAT)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.WithVAT)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Status)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Status)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Supplier)</dt>
+        <dd class="col-sm-10">@Model.Supplier.Name</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.CreatedByUser)</dt>
+        <dd class="col-sm-10">@Model.CreatedByUser?.Email</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.ApprovedByUser)</dt>
+        <dd class="col-sm-10">@(Model.ApprovedByUser?.Email ?? "Not yet approved")</dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Items</h4>
+    @if (Model.Status != "Approved")
+    {
+        <a asp-controller="PurchaseOrderItems" asp-action="Create" asp-route-purchaseOrderId="@Model.Id" class="btn btn-primary btn-sm">Add Item</a>
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Description</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@(item.Quantity * item.UnitPrice)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    @if (Model.Status != "Approved")
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a asp-action="Print" asp-route-id="@Model.Id" target="_blank">Print</a>
+        <span> | </span>
+    }
+    <a asp-action="Index">Back to List</a>
+</div>

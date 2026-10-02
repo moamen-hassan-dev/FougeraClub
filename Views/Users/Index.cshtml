@@ -1,0 +1,65 @@
+﻿@model IEnumerable<FougeraClub1.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "User Management";
+    var userRoles = (Dictionary<string, string>)ViewBag.UserRoles;
+}
+
+<h1>User Management</h1>
+<p>Manage Staff and Manager accounts</p>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Add User</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    @if (userRoles.ContainsKey(user.Id))
+                    {
+                        var role = userRoles[user.Id];
+                        if (role == "Manager")
+                        {
+                            <span class="badge bg-primary">@role</span>
+                        }
+                        else if (role == "Staff")
+                        {
+                            <span class="badge bg-success">@role</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">@role</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">—</span>
+                    }
+                </td>
+                <td>
+                    <form asp-action="Delete" method="post" style="display:inline;" onsubmit="return confirm('Delete this user? This cannot be undone.');">
+                        <input type="hidden" name="id" value="@user.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

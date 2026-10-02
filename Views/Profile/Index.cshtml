@@ -1,0 +1,97 @@
+﻿@model FougeraClub1.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<h1>My Profile</h1>
+<p>View and update your account</p>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">Account Details</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input class="form-control" value="@Model.UserName" readonly />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" value="@Model.Email" readonly />
+                </div>
+                <form asp-action="UpdatePhone" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" name="phoneNumber" class="form-control" value="@Model.PhoneNumber" />
+                    </div>
+                    <button type="submit" class="btn btn-success">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">Change Password</div>
+            <div class="card-body">
+                <form asp-action="ChangePassword" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Current Password</label>
+                        <input type="password" name="currentPassword" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">New Password</label>
+                        <input type="password" name="newPassword" class="form-control" />
+                        <small class="text-muted">Minimum 6 characters, one uppercase, one digit, one symbol.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password" name="confirmPassword" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-outline-success">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@if (User.IsInRole("Manager"))
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Digital Signature</div>
+                <div class="card-body">
+                    <form asp-action="UploadSignature" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Current Signature</label><br />
+                            @if (!string.IsNullOrEmpty(Model.SignatureImagePath))
+                            {
+                                <img src="@Model.SignatureImagePath" style="max-height:100px; border:1px solid #ccc; padding:5px;" alt="Signature" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">No signature uploaded yet</span>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Upload New Signature</label>
+                            <input type="file" name="SignatureFile" class="form-control" accept="image/*" />
+                        </div>
+                        <button type="submit" class="btn btn-success">Save Signature</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

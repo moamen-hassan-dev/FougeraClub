@@ -1,0 +1,28 @@
+﻿@model IEnumerable<FougeraClub1.Models.Log>
+
+@{
+    ViewData["Title"] = "Logs";
+}
+
+<h1>Logs</h1>
+<p>Recent activity in the system</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>When</th>
+            <th>User</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+            <tr>
+                <td>@log.Timestamp.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@(log.User?.Email ?? "—")</td>
+                <td>@log.Action</td>
+            </tr>
+        }
+    </tbody>
+</table>

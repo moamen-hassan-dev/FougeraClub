@@ -1,0 +1,125 @@
+﻿@model IEnumerable<FougeraClub1.Models.PurchaseOrder>
+
+@{
+    ViewData["Title"] = "Purchase Orders";
+    var currentStatus = ViewData["CurrentStatus"]?.ToString();
+}
+
+<div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+        <h1>Purchase Orders</h1>
+        <p class="text-muted">Manage purchase order requests</p>
+    </div>
+    <div>
+        <a asp-action="Create" class="btn btn-success">+ Add</a>
+        <a asp-action="ExportExcel"
+           asp-route-supplierId="@Context.Request.Query["supplierId"]"
+           asp-route-status="@Context.Request.Query["status"]"
+           asp-route-dateFrom="@Context.Request.Query["dateFrom"]"
+           asp-route-dateTo="@Context.Request.Query["dateTo"]"
+           class="btn btn-outline-success">Excel Export</a>        <a href="#" onclick="window.print();return false;" class="btn btn-outline-dark">Print</a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" asp-action="Index">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label">Supplier</label>
+                    <select name="supplierId" class="form-select" asp-items="ViewBag.SupplierList">
+                        <option value="">All Suppliers</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select">
+                        <option value="">All</option>
+                        <option value="Pending" selected="@(currentStatus == "Pending")">Pending</option>
+                        <option value="Approved" selected="@(currentStatus == "Approved")">Approved</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Date From</label>
+                    <input type="date" name="dateFrom" class="form-control" value="@ViewData["DateFrom"]" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Date To</label>
+                    <input type="date" name="dateTo" class="form-control" value="@ViewData["DateTo"]" />
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-success">Search</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>PO #</th>
+            <th>Supplier</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Created By</th>
+            <th>Approved By</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var subtotal = item.Items.Sum(i => i.Quantity * i.UnitPrice);
+            var total = item.WithVAT ? subtotal * 1.05m : subtotal;
+            <tr>
+                <td>#@item.OrderNumber</td>
+                <td>@item.Supplier?.Name</td>
+                <td>@item.Items.Count</td>
+                <td>@total.ToString("N2")</td>
+                <td>@item.OrderDate.ToString("yyyy-MM-dd")</td>
+                <td>
+                    @if (item.Status == "Approved")
+                    {
+                        <span class="badge bg-success">Approved</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    }
+                </td>
+                <td>@item.CreatedByUser?.Email</td>
+                <td>@(item.ApprovedByUser?.Email ?? "—")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+
+                    @if (item.Status == "Approved")
+                    {
+                        <a asp-action="Print" asp-route-id="@item.Id" target="_blank" class="btn btn-sm btn-outline-dark">Print</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                        @if (User.IsInRole("Manager"))
+                        {
+                            <a asp-action="Approve" asp-route-id="@item.Id" class="btn btn-sm btn-success">Approve</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

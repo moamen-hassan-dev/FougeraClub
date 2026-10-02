@@ -1,0 +1,58 @@
+﻿@model FougeraClub1.Models.PurchaseOrder
+
+@{
+    ViewData["Title"] = "Approve Purchase Order";
+}
+
+<h1>Approve Purchase Order</h1>
+<p>Confirm approval of this order. Your signature will appear on the printed document.</p>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Order #</dt>
+            <dd class="col-sm-9">@Model.OrderNumber</dd>
+
+            <dt class="col-sm-3">Supplier</dt>
+            <dd class="col-sm-9">@Model.Supplier?.Name</dd>
+
+            <dt class="col-sm-3">Order Date</dt>
+            <dd class="col-sm-9">@Model.OrderDate.ToString("yyyy-MM-dd")</dd>
+
+            <dt class="col-sm-3">With VAT</dt>
+            <dd class="col-sm-9">@(Model.WithVAT ? "Yes" : "No")</dd>
+
+            <dt class="col-sm-3">Created By</dt>
+            <dd class="col-sm-9">@Model.CreatedByUser?.Email</dd>
+        </dl>
+
+        <h5>Items</h5>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Description</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitPrice.ToString("N2")</td>
+                        <td>@((item.Quantity * item.UnitPrice).ToString("N2"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<form asp-action="Approve" asp-route-id="@Model.Id" method="post">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-success">Confirm Approval</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
