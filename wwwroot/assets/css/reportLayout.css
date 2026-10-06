@@ -1,0 +1,99 @@
+/*:root {
+    --main-font-family: "Tajawal", sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--main-font-family);
+}
+
+.container {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.header {
+    padding: 20px;
+}
+
+.report-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.details {
+    width: 50%;
+}
+
+@media print {
+    .container {
+        width: 90% !important;
+        margin: 70px auto !important;
+        padding: 0;
+    }
+}*/
+
+:root {
+    --main-font-family: "Tajawal", sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--main-font-family);
+}
+
+.container {
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.header {
+    padding: 20px;
+}
+
+.report-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.details {
+    width: 48%;
+}
+.date {
+    color:#8b8888;
+    font-size:12px;
+}
+/*.main-margin {
+    margin-top:30px;
+    margin-bottom:30px;
+}
+*/
+@media print {
+    body, html {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    .container {
+        max-width: 100% !important; /* override Bootstrap */
+        margin: 30px 0 0 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .details {
+        width: 50% !important; /* stretch each section */
+    }
+
+    @page {
+        size: A4 portrait; /* Set the page size to A4 in portrait orientation */
+        margin: 15mm 10mm ; /* Set the margin: top/bottom 5mm, left/right 10mm */
+    }
+
+}

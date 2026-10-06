@@ -1,22 +1,169 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+}
+
+.filterImg {
+    padding-bottom: 7px;
+    background-image: url("/assets/images/adminpattern/bg-search.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid var(--highdmin-border-color);
+}
+
+    .filterImg button {
+        line-height: 25px;
+    }
+
+    .filterImg label {
+        color: var(--primary-dark);
+    }
+
+    .filterImg input,
+    .filterImg select {
+        text-align: right;
+        border: 1px solid #ccc !important;
+    }
+
+.records-count-box > span {
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+.records-count-box {
+    padding: 5px 8px;
+    background-color: #fff;
+    border: 1px solid var(--primary-dark);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: " ";
+    padding: 0 5px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: none;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    font-size: 0.9em;
+    border: 1px solid #ccc;
+    direction: rtl;
+}
+
+.badge-expired {
+    background-color: #fde0dc;
+    color: #b71c1c;
+    border-color: #f8bbd0;
+}
+
+.badge-warning {
+    background-color: #fff9c4;
+    color: #795548;
+    border-color: #ffe082;
+}
+
+.SectionPageColor {
+    color: orange;
+}
+
+/* Override SweetAlert2 cancel button color */
+:root {
+    --swal2-cancel-button-background-color: #A0D977;
+}
+
+.swal2-container button.swal2-cancel,
+.swal2-container .swal2-cancel.swal2-styled {
+    background-color: #A0D977 !important;
+    color: #ffffff !important;
+}
+
+/* ============================================= */
+/* Sidebar / page layout (single source of truth) */
+/* ============================================= */
+
+/* Desktop: sidebar visible at 260px, content to the right */
+@media (min-width: 992px) {
+    .sidenav-menu {
+        width: 260px !important;
+        min-width: 260px !important;
+        max-width: 260px !important;
+        left: 0 !important;
+        transform: none !important;
+        top: 64px !important;
+        height: calc(100vh - 64px) !important;
+    }
+
+    .page-content {
+        margin-left: 260px !important;
+        width: calc(100% - 260px) !important;
+        margin-top: 64px !important;
+    }
+
+    .side-nav .menu-text {
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .side-nav-link .menu-icon {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+}
+
+/* Mobile: sidebar overlays, content full width */
+@media (max-width: 991px) {
+    .page-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        margin-top: 64px !important;
+    }
+}
+
+/* Navbar pinned to top */
+.custom-navbar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    height: 64px;
 }

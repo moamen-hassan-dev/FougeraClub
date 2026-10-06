@@ -1,0 +1,44 @@
+
+@media print {
+    .print-none {
+        display: none !important;
+    }
+
+    body, html {
+        background: #ffffff !important;
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        overflow: visible !important;
+    }
+
+    * {
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+
+    #printArea {
+        width: 79%;
+        margin: auto;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .red-bg {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background-color: #af1717 !important;
+        color: #fff !important;
+    }
+
+    input {
+        border: none !important;
+        background: transparent !important;
+        color: #000 !important;
+        -webkit-text-fill-color: #000 !important;
+        print-color-adjust: exact !important;
+        text-align: center !important;
+    }
+}
+

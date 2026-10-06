@@ -1,0 +1,58 @@
+/* Custom Select2 style to match the old filter UI */
+.select2-container--default .select2-selection--single {
+    height: 35px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    background-color: #fff !important;
+    padding: 2px 8px !important;
+    font-size: 1rem !important;
+    color: #212529 !important;
+    box-shadow: none !important;
+    text-align: right;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 30px !important;
+    color: #212529 !important;
+    text-align: right;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 33px !important;
+    left: 8px !important;
+}
+
+.select2-container--default .select2-selection--single:focus {
+    border-color: #47A644 !important;
+    outline: none !important;
+}
+.select2-container .select2-selection--single .select2-selection__rendered {
+    display: block;
+    padding-right: 8px !important;
+    padding-left: 20px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.select2-dropdown {
+    border: 1px solid var(--primary-dark) !important;
+    border-radius: 4px !important;
+    font-size: 1rem !important;
+    z-index: 9999;
+}
+
+.select2-results__option {
+    padding-right: 16px !important;
+    text-align: right;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #47A644 !important;
+    color: #fff !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #888 !important;
+    text-align: right;
+}
